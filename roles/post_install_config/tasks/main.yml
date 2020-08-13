@@ -1,0 +1,50 @@
+- name: Ensure Pulp is up and healthy
+  pulp.squeezer.status:
+    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    username: "{{ pulp_admin_username }}"
+    password: "{{ pulp_default_admin_password }}"
+    validate_certs: "{{ pulp_api_validate_certs }}"
+  register: result
+  until: >
+    result.status is defined and
+    result.status.database_connection.connected == true and
+    result.status.redis_connection.connected == true and
+    result.status.online_workers | map(attribute='name') | select('match', '^resource-manager$') | list | count > 0 and
+    result.status.online_workers | map(attribute='name') | select('match', '^[0-9]+@.*$') | list | count > 0
+  delay: 2
+  retries: 60
+
+- name: Create default repositories
+  pulp.squeezer.ansible_repository:
+    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    username: "{{ pulp_admin_username }}"
+    password: "{{ pulp_default_admin_password }}"
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    state: present
+  loop: "{{ pulp_ansible_repositories }}"
+
+- name: Create default distributions
+  pulp.squeezer.ansible_distribution:
+    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    username: "{{ pulp_admin_username }}"
+    password: "{{ pulp_default_admin_password }}"
+    name: "{{ item.name }}"
+    base_path: "{{ item.base_path }}"
+    repository: "{{ item.name }}"
+    state: present
+  loop: "{{ pulp_ansible_repositories }}"
+
+- name: Create the default group and assign to the admin user
+  command: '{{ pulp_install_dir }}/bin/pulpcore-manager create-group system:partner-engineers --users admin'
+  no_log: true
+  become: true
+  become_user: '{{ pulp_user }}'
+  environment:
+    PULP_SETTINGS: "{{ pulp_settings_file }}"
+
+- name: Insure tar is available for galaxy-importer
+  package:
+    name: tar
+    state: present
+  become: true

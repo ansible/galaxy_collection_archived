@@ -1,0 +1,26 @@
+namespace: ansible
+name: galaxy_collection
+version: 1.0.0
+readme: README.md
+
+authors:
+  - chouseknecht 
+
+description: Automation for managing a local Galaxy server 
+
+license:
+  - MIT  
+
+tags:
+  - infrastructure
+  - galaxy
+
+dependencies: 
+  - pulp.squeezer
+
+repository: http://github.com/ansible/galaxy_collection
+documentation: '' 
+homepage: http://github.com/ansible/galaxy_collection
+issues: http://github.com/ansible/galaxy_collection/issues
+
+build_ignore: []

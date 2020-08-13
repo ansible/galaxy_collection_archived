@@ -1,0 +1,9 @@
+---
+pulp_config_dir: '/etc/pulp'
+pulp_install_dir: '/usr/local/lib/pulp'
+pulp_settings_file: '{{ pulp_config_dir }}/settings.py'
+pulp_user: pulp
+pulp_default_admin_password: password
+pulp_api_host: 127.0.0.1
+pulp_api_port: 24817
+pulp_api_validate_certs: yes

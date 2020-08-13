@@ -1,0 +1,17 @@
+pulp_admin_username: admin
+pulp_ansible_repositories:
+  - name: 'published'
+    description: 'Certified content repository'
+    base_path: 'published'
+  - name: 'staging'
+    description: 'Inbound staging repository'
+    base_path: 'staging'
+  - name: 'rejected'
+    description: 'Inbound rejected repository'
+    base_path: 'rejected'
+  - name: 'community'
+    description: 'Community content repository'
+    base_path: 'community'
+  - name: 'rh-certified'
+    description: 'Red Hat certified content repository'
+    base_path: 'rh-certified'
