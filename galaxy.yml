@@ -16,7 +16,7 @@ tags:
   - galaxy
 
 dependencies: 
-  - pulp.squeezer
+  "pulp.squeezer": "*"
 
 repository: http://github.com/ansible/galaxy_collection
 documentation: '' 
