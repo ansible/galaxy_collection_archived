@@ -35,15 +35,24 @@
     state: present
   loop: "{{ pulp_ansible_repositories }}"
 
-- name: Create the default group and assign to the admin user
-  command: '{{ pulp_install_dir }}/bin/pulpcore-manager create-group system:partner-engineers --users admin'
+- name: Create admins group and assign to the admin user
+  command: '{{ pulp_install_dir }}/bin/pulpcore-manager create-group admins --users {{ pulp_admin_username }}'
   no_log: true
   become: true
   become_user: '{{ pulp_user }}'
   environment:
     PULP_SETTINGS: "{{ pulp_settings_file }}"
 
-- name: Insure tar is available for galaxy-importer
+- name: Assign permissions to the admins group
+  command: '{{ pulp_install_dir }}/bin/pulpcore-manager assign-permission admins {{ item }}'
+  no_log: true
+  become: true
+  become_user: '{{ pulp_user }}'
+  environment:
+    PULP_SETTINGS: "{{ pulp_settings_file }}"
+  loop: "{{ pulp_galaxy_permissions }}"
+
+- name: Ensure tar is available for galaxy-importer
   package:
     name: tar
     state: present
