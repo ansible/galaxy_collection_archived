@@ -19,7 +19,7 @@
     pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
-    name: "{{ item.name }}"
+    name: "{{ item.repo_name }}"
     description: "{{ item.description }}"
     state: present
   loop: "{{ pulp_ansible_repositories }}"
@@ -29,9 +29,9 @@
     pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
-    name: "{{ item.name }}"
+    name: "{{ item.dist_name }}"
     base_path: "{{ item.base_path }}"
-    repository: "{{ item.name }}"
+    repository: "{{ item.repo_name }}"
     state: present
   loop: "{{ pulp_ansible_repositories }}"
 
