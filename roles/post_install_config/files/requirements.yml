@@ -1,0 +1,4 @@
+---
+collections:
+  - name: 'ansible.okd'
+    server: https://galaxy.ansible.com/v3/collections

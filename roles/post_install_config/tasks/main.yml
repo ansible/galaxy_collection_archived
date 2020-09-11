@@ -52,6 +52,47 @@
     PULP_SETTINGS: "{{ pulp_settings_file }}"
   loop: "{{ pulp_galaxy_permissions }}"
 
+- name: Assign permissions to the admins group
+  command: '{{ pulp_install_dir }}/bin/pulpcore-manager assign-permission admins {{ item }}'
+  become: true
+  become_user: '{{ pulp_user }}'
+  environment:
+    PULP_SETTINGS: "{{ pulp_settings_file }}"
+  loop: "{{ pulp_galaxy_permissions }}"
+
+- name: Copy default community requirements.yml to the remote
+  copy:
+    src: '{{ role_path }}/files/requirements.yml'
+    dest: '{{ ansible_env.HOME }}/requirements.yml'
+
+- name: Configure community remote
+  command: >
+    {{ pulp_install_dir }}/bin/pulpcore-manager
+     create-remote
+     community
+     https://galaxy.ansible.com/v3/collections
+     -r {{ ansible_env.HOME }}/requirements.yml
+     --distribution community
+     --repository community
+  become: true
+  become_user: '{{ pulp_user }}'
+  environment:
+    PULP_SETTINGS: "{{ pulp_settings_file }}"
+
+- name: Configure RH Certified remote
+  command: >
+    {{ pulp_install_dir }}/bin/pulpcore-manager
+     create-remote
+     rh-certified
+     https://cloud.redhat.com/api/automation-hub/v3/collections
+     --auth_url https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+     --distribution 'Red Hat Certified'
+     --repository rh-certified
+  become: true
+  become_user: '{{ pulp_user }}'
+  environment:
+    PULP_SETTINGS: "{{ pulp_settings_file }}"
+
 - name: Ensure tar is available for galaxy-importer
   package:
     name: tar
