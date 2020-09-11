@@ -20,3 +20,16 @@ pulp_ansible_repositories:
     description: 'Red Hat certified content repository'
     base_path: 'rh-certified'
     dist_name: 'Red Hat Ceritifed'
+pulp_galaxy_permissions:
+  - galaxy.add_namespace
+  - galaxy.change_namespace
+  - galaxy.upload_to_namespace
+  - ansible.modify_ansible_repo_content
+  - galaxy.view_user
+  - galaxy.delete_user
+  - galaxy.add_user
+  - galaxy.change_user
+  - galaxy.delete_synclist
+  - galaxy.change_synclist
+  - galaxy.view_synclist
+  - galaxy.add_synclist
