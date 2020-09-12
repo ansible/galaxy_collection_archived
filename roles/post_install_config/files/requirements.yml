@@ -1,4 +1,4 @@
 ---
 collections:
-  - name: 'ansible.okd'
-    server: https://galaxy.ansible.com/v3/collections
+  - name: namespace.collection_name
+    source: https://galaxy.ansible.com/

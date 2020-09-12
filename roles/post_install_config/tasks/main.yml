@@ -3,7 +3,6 @@
     pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
-    validate_certs: "{{ pulp_api_validate_certs }}"
   register: result
   until: >
     result.status is defined and
@@ -45,32 +44,23 @@
 
 - name: Assign permissions to the admins group
   command: '{{ pulp_install_dir }}/bin/pulpcore-manager assign-permission admins {{ item }}'
-  no_log: true
   become: true
   become_user: '{{ pulp_user }}'
   environment:
     PULP_SETTINGS: "{{ pulp_settings_file }}"
   loop: "{{ pulp_galaxy_permissions }}"
 
-- name: Assign permissions to the admins group
-  command: '{{ pulp_install_dir }}/bin/pulpcore-manager assign-permission admins {{ item }}'
-  become: true
-  become_user: '{{ pulp_user }}'
-  environment:
-    PULP_SETTINGS: "{{ pulp_settings_file }}"
-  loop: "{{ pulp_galaxy_permissions }}"
-
-- name: Copy default community requirements.yml to the remote
+- name: Copy default community requirements.yml
   copy:
     src: '{{ role_path }}/files/requirements.yml'
     dest: '{{ ansible_env.HOME }}/requirements.yml'
 
-- name: Configure community remote
+- name: Configure Community remote
   command: >
     {{ pulp_install_dir }}/bin/pulpcore-manager
      create-remote
      community
-     https://galaxy.ansible.com/v3/collections
+     https://galaxy.ansible.com/api/v2/collections
      -r {{ ansible_env.HOME }}/requirements.yml
      --distribution community
      --repository community
@@ -86,7 +76,7 @@
      rh-certified
      https://cloud.redhat.com/api/automation-hub/v3/collections
      --auth_url https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-     --distribution 'Red Hat Certified'
+     --distribution 'red-hat-certified'
      --repository rh-certified
   become: true
   become_user: '{{ pulp_user }}'

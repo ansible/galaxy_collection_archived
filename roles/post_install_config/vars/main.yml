@@ -19,7 +19,7 @@ pulp_ansible_repositories:
   - repo_name: 'rh-certified'
     description: 'Red Hat certified content repository'
     base_path: 'rh-certified'
-    dist_name: 'Red Hat Ceritifed'
+    dist_name: 'red-hat-certified'
 pulp_galaxy_permissions:
   - galaxy.add_namespace
   - galaxy.change_namespace
