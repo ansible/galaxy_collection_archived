@@ -4,7 +4,6 @@
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
   register: result
-  ignore_errors: yes
   until: >
     result.status is defined and
     result.status.database_connection.connected == true and
