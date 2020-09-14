@@ -4,6 +4,7 @@
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
   register: result
+  ignore_errors: yes
   until: >
     result.status is defined and
     result.status.database_connection.connected == true and
@@ -53,7 +54,10 @@
 - name: Copy default community requirements.yml
   copy:
     src: '{{ role_path }}/files/requirements.yml'
-    dest: '{{ ansible_env.HOME }}/requirements.yml'
+    dest: '{{ pulp_install_dir }}/requirements.yml'
+    mode: '0660'
+  become: true
+  become_user: '{{ pulp_user }}'
 
 - name: Configure Community remote
   command: >
@@ -61,7 +65,7 @@
      create-remote
      community
      https://galaxy.ansible.com/api/v2/collections
-     -r {{ ansible_env.HOME }}/requirements.yml
+     -r {{ pulp_install_dir }}/requirements.yml
      --distribution community
      --repository community
   become: true
