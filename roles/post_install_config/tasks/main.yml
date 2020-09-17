@@ -1,8 +1,9 @@
 - name: Ensure Pulp is up and healthy
   pulp.squeezer.status:
-    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    pulp_url: "{{ pulp_url }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
+    validate_certs: "{{ pulp_validate_certs | bool }}"
   register: result
   until: >
     result.status is defined and
@@ -15,9 +16,10 @@
 
 - name: Create default repositories
   pulp.squeezer.ansible_repository:
-    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    pulp_url: "{{ pulp_url }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
+    validate_certs: "{{ pulp_validate_certs | bool }}"
     name: "{{ item.repo_name }}"
     description: "{{ item.description }}"
     state: present
@@ -25,9 +27,10 @@
 
 - name: Create default distributions
   pulp.squeezer.ansible_distribution:
-    pulp_url: "http://{{ pulp_api_host }}:{{ pulp_api_port }}"
+    pulp_url: "{{ pulp_url }}"
     username: "{{ pulp_admin_username }}"
     password: "{{ pulp_default_admin_password }}"
+    validate_certs: "{{ pulp_validate_certs | bool }}"
     name: "{{ item.dist_name }}"
     base_path: "{{ item.base_path }}"
     repository: "{{ item.repo_name }}"
