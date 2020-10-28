@@ -56,25 +56,5 @@
 - name: Configure content sync remotes
   include_tasks: configure_remotes.yml
 
-- name: Ensure tar is available for galaxy-importer
-  package:
-    name: tar
-    state: present
-  become: true
-
-- name: Create galaxy-importer directory
-  file:
-    path: "/etc/galaxy-importer/"
-    state: directory
-  become: true
-
-- name: Merging specified galaxy-importer settings with default ones
-  set_fact:
-    _galaxy_importer_settings: '{{ default_galaxy_importer_settings | combine(galaxy_importer_settings | default({})) }}'
-
-- name: Write galaxy-importer config
-  template:
-    src: galaxy-importer.cfg.j2
-    dest: /etc/galaxy-importer/galaxy-importer.cfg
-    mode: '0660'
-  become: true
+- name: Configure galaxy-importer
+  include_tasks: galaxy_importer.yml
