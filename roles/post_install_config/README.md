@@ -12,3 +12,4 @@ Variables
 * `pulp_url`: URL for connecting to the Pulp API server. Defaults to "http://127.0.0.1:24817/".
 * `pulp_settings_file`: Location of the Django setings files. Defaults to "{{ pulp_config_dir }}/settings.py".
 * `pulp_validate_certs`: Whether or not the TLS certificates should be verified. Defaults to "true".
+* `galaxy_importer_settings`: Key value dictionnary that contains the content of `galaxy-importer.cfg` to be overwritten.
