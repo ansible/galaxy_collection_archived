@@ -68,9 +68,13 @@
     state: directory
   become: true
 
-- name: Copy default galaxy-importer config 
-  copy:
-    src: '{{ role_path }}/files/galaxy-importer.cfg'
-    dest: '/etc/galaxy-importer/galaxy-importer.cfg'
+- name: Merging specified galaxy-importer settings with default ones
+  set_fact:
+    _galaxy_importer_settings: '{{ default_galaxy_importer_settings | combine(galaxy_importer_settings | default({})) }}'
+
+- name: Write galaxy-importer config
+  template:
+    src: galaxy-importer.cfg.j2
+    dest: /etc/galaxy-importer/galaxy-importer.cfg
     mode: '0660'
   become: true

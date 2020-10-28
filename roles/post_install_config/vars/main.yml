@@ -33,3 +33,11 @@ pulp_galaxy_permissions:
   - galaxy.change_synclist
   - galaxy.view_synclist
   - galaxy.add_synclist
+default_galaxy_importer_settings:
+  log_level_main: INFO
+  run_flake8: False
+  run_ansible_doc: True
+  run_ansible_lint: True
+  run_ansible_test: False
+  ansible_test_local_image: False
+  infra_osd: False
