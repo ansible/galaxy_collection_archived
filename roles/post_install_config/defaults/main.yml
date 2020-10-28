@@ -7,3 +7,4 @@ pulp_user: pulp
 pulp_default_admin_password: password
 pulp_url: 'http://127.0.0.1:24817/'
 pulp_validate_certs: true
+galaxy_importer_settings: {}
