@@ -33,3 +33,9 @@ pulp_galaxy_permissions:
   - galaxy.change_synclist
   - galaxy.view_synclist
   - galaxy.add_synclist
+  - galaxy.view_group
+  - galaxy.delete_group
+  - galaxy.add_group
+  - galaxy.change_group
+  - ansible.change_collectionremote
+  - ansible.view_collectionremote

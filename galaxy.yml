@@ -1,6 +1,6 @@
 namespace: ansible
 name: galaxy_collection
-version: 1.0.12
+version: 1.0.13
 readme: README.md
 
 authors:
