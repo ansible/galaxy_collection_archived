@@ -1,25 +1,4 @@
 pulp_admin_username: admin
-pulp_ansible_repositories:
-  - repo_name: 'published'
-    description: 'Certified content repository'
-    base_path: 'published'
-    dist_name: 'published'
-  - repo_name: 'staging'
-    description: 'Inbound staging repository'
-    base_path: 'staging'
-    dist_name: 'staging'
-  - repo_name: 'rejected'
-    description: 'Inbound rejected repository'
-    base_path: 'rejected'
-    dist_name: 'rejected'
-  - repo_name: 'community'
-    description: 'Community content repository'
-    base_path: 'community'
-    dist_name: 'community'
-  - repo_name: 'rh-certified'
-    description: 'Red Hat certified content repository'
-    base_path: 'rh-certified'
-    dist_name: 'red-hat-certified'
 pulp_galaxy_permissions:
   - galaxy.add_namespace
   - galaxy.change_namespace
