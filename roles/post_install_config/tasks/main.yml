@@ -14,29 +14,6 @@
   delay: 2
   retries: 60
 
-- name: Create default repositories
-  pulp.squeezer.ansible_repository:
-    pulp_url: "{{ pulp_url }}"
-    username: "{{ pulp_admin_username }}"
-    password: "{{ pulp_default_admin_password }}"
-    validate_certs: "{{ pulp_validate_certs | bool }}"
-    name: "{{ item.repo_name }}"
-    description: "{{ item.description }}"
-    state: present
-  loop: "{{ pulp_ansible_repositories }}"
-
-- name: Create default distributions
-  pulp.squeezer.ansible_distribution:
-    pulp_url: "{{ pulp_url }}"
-    username: "{{ pulp_admin_username }}"
-    password: "{{ pulp_default_admin_password }}"
-    validate_certs: "{{ pulp_validate_certs | bool }}"
-    name: "{{ item.dist_name }}"
-    base_path: "{{ item.base_path }}"
-    repository: "{{ item.repo_name }}"
-    state: present
-  loop: "{{ pulp_ansible_repositories }}"
-
 - name: Create admins group and assign to the admin user
   command: '{{ pulp_install_dir }}/bin/pulpcore-manager create-group admins --users {{ pulp_admin_username }}'
   no_log: true
